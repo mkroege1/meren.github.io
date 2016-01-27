@@ -30,7 +30,7 @@ To run anvi'o, you _at least_ need these files:
 
 It is that simple.
 
-However, **your FASTA file must have simple deflines**, and if it doesn't have simple deflines, **you must fix your FASTA file prior to mapping**. This is necessary, because the names in `contigs.fa` **must** match the names in your BAM files. But ynfortunately, different mapping software behave differently when they find a space character, or say a `|` in your target FASTA file, and they proceed to change those characters. Therefore it is essential to keep the sequence IDs in this file **as simple as possible** before mapping. To avoid any problems later, take a look at your deflines prior to mapping now, and remove anything that is not a digit, an ASCII letter, an underscore, or a dash character. Here are some examples:
+However, **your FASTA file must have simple deflines**, and if it doesn't have simple deflines, **you must fix your FASTA file prior to mapping**. This is necessary, because the names in `contigs.fa` **must** match the names in your BAM files. But unfortunately, different mapping software behave differently when they find a space character, or say a `|` in your target FASTA file, and they proceed to change those characters. Therefore it is essential to keep the sequence IDs in this file **as simple as possible** before mapping. To avoid any problems later, take a look at your deflines prior to mapping now, and remove anything that is not a digit, an ASCII letter, an underscore, or a dash character. Here are some examples:
 
 {% highlight bash %}
 BAD deflines:
@@ -79,7 +79,7 @@ Following sections will describe each program you will frequently use while walk
 
 ## anvi-gen-contigs-db
 
-Contigs database will be the essential ingredient everything you will do with anvi'o. It will process `contigs.fa`, and store it in a better formatted way. You can decorate your contigs database, but the one command you have to run is this:
+Contigs database will be the essential ingredient for everything you will do with anvi'o. It will process `contigs.fa`, and store it in a better formatted way. You can decorate your contigs database, but the one command you have to run is this:
 
     anvi-gen-contigs-database -f contigs.fa -o contigs.db
 
@@ -130,7 +130,7 @@ If your BAM files already sorted and indexed (i.e., for each sample there is a `
 
 But of course it is not fun to do every BAM file you have one by one. So what to do?
 
-A slightly better way to do would require you to do it in a `for` loop. First create a file called, say, `SAMPLE_IDs`. For your samples (`X` and `Y`) it will look like this:
+A slightly better way to do this would require you to do it in a `for` loop. First create a file called, say, `SAMPLE_IDs`. For your samples (`X` and `Y`) it will look like this:
 
 {% highlight bash %}
 $ cat SAMPLE_IDs
@@ -154,7 +154,7 @@ The minimal command to profile a BAM file looks like this:
 
 anvi-profile -i X.bam -c contigs.db
 
-But I encourage you to take a look at the default paramers. One of the most critical parameter is `-M` (`--min-contig-length`) parameter. The default is 10,000. Which means the profiling step will take into consideration only the contigs that are longer than 10Kb. This may be too large for your analysis. But clustering and visualization steps in anvi'o have some limitations, so you can't really say `-M 0` in most cases. The rule of thumb is to keep the number of contigs anvi'o will deal to a maximum of 20,000. How can you know how many contigs are there for a given `-M` value? Well, one thing to find that out is this:
+But I encourage you to take a look at the default paramers. One of the most critical parameter is `-M` (`--min-contig-length`) parameter. The default is 5,000. Which means the profiling step will take into consideration only the contigs that are longer than 5Kb. This may be too large for your analysis. But clustering and visualization steps in anvi'o have some limitations, so you can't really say `-M 0` in most cases. The rule of thumb is to keep the number of contigs anvi'o will deal to a maximum of 20,000. How can you know how many contigs are there for a given `-M` value? Well, one thing to find that out is this:
 
     sqlite3 contigs.db 'select count(*) from contigs_basic_info where length > 10000;'
 
